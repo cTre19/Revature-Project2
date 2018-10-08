@@ -1,2 +1,2 @@
 # Revature-Project2
-Revature Employee Vessel System
+Revature Employee Vessel (REV)
