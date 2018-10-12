@@ -1,18 +1,44 @@
 package com.revature.beans;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="users")
 public class User {
 	
-	private String firstName;
-	private String lastName;
+	@Id
+	@Column(name="user_id")
 	private int id;
+	
+	@Column(name="first_name")
+	private String firstName;
+	
+	@Column(name="last_name")
+	private String lastName;
+	
+	@Column(name="email")
 	private String email;
+	
+	@Column(name="password")
 	private String password;
+	
+	@Column(name="city")
 	private String city;
+	
+	@Column(name="state")
 	private String state;
+	
+	@Column(name="client")
 	private String clientCompany;
+	
+	@Column(name="batch_id")
 	private int batchId;
 	
-	
+	@Column(name="position")
+	private String position;
 	
 	public User(String firstName, String lastName, int id, String email, String password, String city, String state,
 			String clientCompany, int batchId, String position) {
@@ -29,14 +55,10 @@ public class User {
 		this.position = position;
 	}
 	
-	
-	
 	public User() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-
-
 
 	@Override
 	public String toString() {
@@ -104,6 +126,6 @@ public class User {
 	public void setPosition(String position) {
 		this.position = position;
 	}
-	private String position;
+	
 
 }
