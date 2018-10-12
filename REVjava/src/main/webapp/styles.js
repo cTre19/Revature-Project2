@@ -7,7 +7,7 @@
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "/* You can add global styles to this file, and also import other style files */\r\n"
+module.exports = "/* You can add global styles to this file, and also import other style files */\n"
 
 /***/ }),
 
@@ -539,7 +539,7 @@ if(false) {}
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! D:\j5e27\Documents\Rev\Revature Employment Vessel\REV\src\styles.css */"./src/styles.css");
+module.exports = __webpack_require__(/*! C:\Users\Juan Carlos\Dropbox\Revature\REVangular\angular-rev\src\styles.css */"./src/styles.css");
 
 
 /***/ })
