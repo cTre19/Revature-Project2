@@ -31,7 +31,7 @@ public class LoginCtrl {
 		return "login";
 	}
 	
-	@RequestMapping(value="/login", method=RequestMethod.POST)
+	@RequestMapping(value="/login", method=RequestMethod.POST, consumes="{application/json}")
 	public String loginPost(@Valid User user, BindingResult bindingResult, ModelMap modelMap, HttpSession sess){
 		
 		System.out.println("inside loginPost");
