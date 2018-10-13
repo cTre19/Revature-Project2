@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.revature.beans.Credentials;
 import com.revature.beans.User;
 import com.revature.services.AuthServiceImp;
 
@@ -32,18 +33,18 @@ public class LoginCtrl {
 	}
 	
 	@RequestMapping(value="/login", method=RequestMethod.POST, consumes="{application/json}")
-	public String loginPost(@Valid User user, BindingResult bindingResult, ModelMap modelMap, HttpSession sess){
+	public String loginPost(@Valid Credentials cred, BindingResult bindingResult, ModelMap modelMap, HttpSession sess){
 		
 		System.out.println("inside loginPost");
-		User authUser = authService.validate(user);
+		User u = authService.validate(cred);
 		
 		if (bindingResult.hasErrors()){
 			modelMap.addAttribute("errorMessage", bindingResult.getAllErrors().get(0).getDefaultMessage());
 			return "login";
 		}
 		
-		if(authUser != null){
-			sess.setAttribute("user", authUser);
+		if(u != null){
+			sess.setAttribute("user", u);
 			return "home";
 		}
 		
