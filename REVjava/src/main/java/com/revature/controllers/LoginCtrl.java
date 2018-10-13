@@ -16,12 +16,12 @@ import com.revature.beans.User;
 import com.revature.services.AuthServiceImp;
 
 @RestController
-//@CrossOrigin(origins="http://localhost:4200")
 public class LoginCtrl {
 	
 	@Autowired
 	private AuthServiceImp authService;
 	
+	@CrossOrigin(origins="http://localhost:4200")
 	@RequestMapping(value="/login", method=RequestMethod.GET)
 	public String loginGet(HttpSession sess){
 		System.out.println("inside loginGet()");
@@ -31,7 +31,8 @@ public class LoginCtrl {
 		return "login";
 	}
 	
-	@RequestMapping(value="/login", method=RequestMethod.POST, consumes="{application/json}")
+	@CrossOrigin(origins="http://localhost:4200")
+	@RequestMapping(value="/login", method=RequestMethod.POST, consumes= {"application/json"})
 	public String loginPost(@Valid Credentials cred, BindingResult bindingResult, ModelMap modelMap, HttpSession sess){
 		
 		System.out.println("inside loginPost");

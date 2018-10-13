@@ -16,9 +16,9 @@
 	<!--  Search for @Controller, @RequestMapping, etc -->
 	<mvc:annotation-driven></mvc:annotation-driven>
 	
-	<!-- Tell DispatcherServlet where are our Static Resources 
+	<!-- Tell DispatcherServlet where are our Static Resources -->
 	<mvc:resources location="/pages/" mapping="/pages/**"></mvc:resources>
 	
-	-->
+	
 
 </beans>
