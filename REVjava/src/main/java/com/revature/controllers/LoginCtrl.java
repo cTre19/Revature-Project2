@@ -16,8 +16,7 @@ import com.revature.beans.User;
 import com.revature.services.AuthServiceImp;
 
 @RestController
-@RequestMapping(value="/login")
-@CrossOrigin(origins="http://localhost:4200")
+//@CrossOrigin(origins="http://localhost:4200")
 public class LoginCtrl {
 	
 	@Autowired
