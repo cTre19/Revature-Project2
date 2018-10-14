@@ -1,0 +1,53 @@
+<form style="text-align:center">
+  <div class="application" id="app" style="width: 45rem" >
+    <div class="row justify-content-center">
+      <div class="col-6 col-med">
+        First Name:
+        <input type="text" [(ngModel)]="first" name="first" required autofocus>
+      </div>
+      <div class="col-6 col-med">
+        Last Name:
+        <input type="text" [(ngModel)]="last" name="last" required autofocus>
+      </div>
+    </div><br>
+    <div class="row justify-content-center">
+      <div class="col-6 col-med">
+        Email:
+        <input type="text" [(ngModel)]="email" name="email" required autofocus>
+      </div>
+      <div class="col-6 col-med">
+        Password:
+        <input type="text" [(ngModel)]="pass" name="pass" required autofocus>
+      </div>
+    </div><br>
+    <div class="row justify-content-center">
+      <div class="col-6 col-med">
+        City:
+        <input type="text" [(ngModel)]="city" name="city" required autofocus>
+      </div>
+      <div class="col-6 col-med">
+        State:
+        <input type="text" [(ngModel)]="state" name="state" required autofocus>
+      </div>
+    </div><br>
+    <div class="row justify-content-center">
+      <div class="col-4 col-sm">
+        Client Company:
+        <input type="text" [(ngModel)]="client" name="client" required autofocus>
+      </div>
+      <div class="col-4 col-sm">
+        Batch Id:
+        <input type="number" [(ngModel)]="batch" name="batch" required autofocus>
+      </div>
+      <div class="col-4 col-sm">
+        Position:
+        <input type="text" [(ngModel)]="position" name="position" required autofocus>
+      </div>
+    </div><br>
+    <div class="row justify-content-center">
+      <div class="col-lg"><br>
+        <input type="submit" (click)="postApplication()" name="application">
+      </div>
+    </div>
+  </div>
+</form>
