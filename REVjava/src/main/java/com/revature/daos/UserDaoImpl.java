@@ -2,12 +2,95 @@ package com.revature.daos;
 
 import java.util.ArrayList;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
+import com.revature.beans.Credentials;
 import com.revature.beans.User;
+import com.revature.util.SessionUtil;
 
 @Repository
 public class UserDaoImpl {
+
+	private Session currentSession;
+	private Transaction currentTransaction;
+
+	public Session getCurrentSession() {
+		return SessionUtil.getSession();
+	}
+
+	public User getUser(Integer userId) {
+		return (User) getCurrentSession().get(User.class, userId);
+	}
+
+	public Integer getUserId(Credentials cred) {
+
+		Session sess = SessionUtil.getSession();
+		String hql = "FROM User WHERE email = :em and password = :pw";
+		Query query = sess.createQuery(hql);
+		query.setParameter("em", cred.getEmail());
+		query.setParameter("pw", cred.getPass());
+
+		try {
+			User u = (User) query.list().get(0);
+			return u.getId();
+		} catch(NullPointerException e) {
+			return 0;
+		}
+
+	}
+
+	public UserDaoImpl() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public Session openCurrentSession() {
+		currentSession = getSessionFactory().openSession();
+		return currentSession;
+
+	}
+
+	public Session openCurrentSessionwithTransaction() {
+		currentSession = getSessionFactory().openSession();
+		currentTransaction = (Transaction) currentSession.beginTransaction();
+		return currentSession;
+
+	}
+
+	public void closeCurrentSession() {
+		currentSession.close();
+	}
+
+	public void closeCurrentSessionwithTransaction() {
+		currentTransaction.commit();
+		currentSession.close();
+	}
+
+	private static SessionFactory getSessionFactory() {
+		Configuration configuration = new Configuration().configure();
+		StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder()
+				.applySettings(configuration.getProperties());
+		SessionFactory sessionFactory = configuration.buildSessionFactory(builder.build());
+		return sessionFactory;
+	}
+
+	public void setCurrentSession(Session currentSession) {
+		this.currentSession = currentSession;
+	}
+
+	public Transaction getCurrentTransaction() {
+		return currentTransaction;
+	}
+
+	public void setCurrentTransaction(Transaction currentTransaction) {
+		this.currentTransaction = currentTransaction;
+	}
 
 	ArrayList<User> db = new ArrayList<User>();
 	{
@@ -15,50 +98,4 @@ public class UserDaoImpl {
 		db.add(new User("Bill","Smith", 2, "bill@revature.com", "secret2", "tampa", "florida", "rev", 1, "trainee"));
 	}
 
-	public User get(String email) {
-		for(int i = 0; i <db.size();i++) {
-			if(db.get(i).getEmail().equals(email)) {
-				return db.get(i);
-			}
-		}
-		return null;
-	}
-
-	public void add(User u) {
-		db.add(u);
-	}
-
-	public void update(User u, String email) {
-		User updated = this.get(email);
-		if(updated != null) {
-			updated.setFirstName(u.getFirstName());
-			updated.setLastName(u.getLastName());
-			updated.setId(u.getId());
-			updated.setEmail(u.getEmail());
-			updated.setPassword(u.getPassword());
-			updated.setCity(u.getCity());
-			updated.setState(u.getState());
-			updated.setClientCompany(u.getClientCompany());
-			updated.setBatchId(u.getBatchId());
-			updated.setPosition(u.getPosition());
-		}
-	}
-
-	public void delete(String email) {
-		for(int i = 0; i <db.size();i++) {
-			if(db.get(i).getEmail().equals(email)) {
-				db.remove(i);
-			}
-		}
-	}
-
-	public ArrayList<User> getAll() {
-		ArrayList<User> allUsers = new ArrayList<User>();
-		for(int i = 0; i <db.size();i++) {
-			User u = db.get(i);
-			allUsers.add(u);
-		}
-
-		return allUsers;
-	}
 }

@@ -10,13 +10,13 @@
            		org.postgresql.Driver
            </property>
            <property name="hibernate.connection.url">
-           		     jdbc:postgresql://myettedb.c5bcmnik5cti.us-east-2.rds.amazonaws.com:5432/myettedb?
+           		     jdbc:postgresql://jctdb.clpbct0f8b6e.us-east-2.rds.amazonaws.com:5432/jctDB?
            </property>
            <property name="hibernate.connection.username">
-           		     myette
+           		     juancarlos
            </property>
            <property name="hibernate.connection.password">
-           		     27Htdwilinyc?
+           		     revature19
            </property>
            
            <property name="hibernate.show_sql">true</property>
