@@ -1,36 +1,35 @@
 package com.revature.services;
 
-import java.util.ArrayList;
-
+import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.revature.beans.Credentials;
 import com.revature.beans.User;
 import com.revature.daos.UserDaoImpl;
 
 @Service
 public class UserServicesImpl implements ServicesInterface {
 
+	Logger log = Logger.getLogger(UserServicesImpl.class);
+	public UserServicesImpl() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	@Autowired
-	private UserDaoImpl ud;
+	private static UserDaoImpl ud;
 	
-	public void addUser(User u) {
-		ud.add(u);
+	public User validate(Credentials cred) {
+		ud = new UserDaoImpl();
+		ud.getCurrentSession();
+		
+		Integer uid = ud.getUserId(cred);
+		
+		User user = ud.getUser(uid);
+		
+		return user;
 	}
 	
-	public User getUser(String email) {
-		return ud.get(email);
-	}
 	
-	public void updateUser(User u, String email) {
-		ud.update(u, email);
-	}
-	
-	public void deleteUser(String email) {
-		ud.delete(email);
-	}
-	
-	public ArrayList<User> getAllUsers() {
-		return ud.getAll();
-	}
 }
