@@ -23,7 +23,7 @@ export class ApplicationService {
     private http: HttpClient,
     private messageService: MessageService) { }
 
-  /** POST: send credentials to server */
+  /** POST: send user to server */
   postUser(user: User): Observable<User> {
     return this.http.post<User>(this.url, user, httpOptions);
   }

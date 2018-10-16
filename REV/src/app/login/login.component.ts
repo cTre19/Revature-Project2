@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { LoginService } from '../login.service';
 import { Observable } from 'rxjs';
 import { Credentials } from '../credentials';
+import { NavigationEnd } from '@angular/router';
+import { User } from '../user';
 
 @Component({
   selector: 'app-login',
@@ -27,10 +29,11 @@ export class LoginComponent implements OnInit {
 
     console.log(c);
 
-    this.loginService.postLogin(c).subscribe(
+    this.loginService.postLogin(c).subscribe(data => this.navigate(data));
+  }
 
-    );
-    /*if (!this.c) { return; } */
-   }
+    navigate(cred: Credentials): void {
+      location.replace('/home');
+    }
 
 }
