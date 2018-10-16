@@ -1,12 +1,29 @@
-<h4> Please log in to continue!</h4>
-<form>
-  <div class="login" id="login" >
-    Email:<br>
-    <input type="text" name="email" required autofocus><br>
-    Password:<br>
-    <input type="password" name="password" required autofocus><br>
-    <input type="submit" value="login">
+<div style="text-align:center">
+  <h1>
+    Welcome to the {{ title }}!
+  </h1>
+  <br>
+  <h5> Please log in to continue!</h5>
+</div>
 
-
+<form style="text-align:center">
+  <div class="credentials" id="login" style="width: 20rem">
+    <div class="row justify-content-center">
+      <div class="col-med">
+        Email:<br>
+        <input type="text" [(ngModel)]="email" name="email" required autofocus><br>
+      </div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-med">
+        Password:<br>
+        <input type="password" [(ngModel)]="pass" name="pass" required autofocus><br>
+      </div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-med"><br>
+        <input type="submit" (click)="postCredentials()" name="cred">
+      </div>
+    </div>
   </div>
 </form>

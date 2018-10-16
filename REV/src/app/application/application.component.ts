@@ -10,6 +10,8 @@ import { User } from '../user';
 })
 export class ApplicationComponent implements OnInit {
 
+  title = 'Revature Employee Vessel';
+
   first: '';
   last: '';
   email: '';
