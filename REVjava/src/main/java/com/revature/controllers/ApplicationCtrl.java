@@ -28,6 +28,7 @@ public class ApplicationCtrl {
 		System.out.println("inside applicationPost");
 		if(user != null) {
 			System.out.println(user.toString());
+			System.out.println(us.createUser(user));
 		}
 		// add user to revuser table
 		return "login";

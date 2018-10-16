@@ -1,13 +1,10 @@
 package com.revature.daos;
 
-import java.util.ArrayList;
+import javax.transaction.Transactional;
 
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
 import com.revature.beans.Credentials;
@@ -24,11 +21,66 @@ public class UserDaoImpl {
 		return SessionUtil.getSession();
 	}
 
-	public User getUser(Integer userId) {
-		return (User) getCurrentSession().get(User.class, userId);
+	public User getUser(Credentials cred) {
+		return (User) getCurrentSession().get(User.class, cred.getEmail());
+	}
+	
+	@Transactional
+	public String createUser(User user){
+		Session sess = SessionUtil.getSession();
+		Transaction tx = null;
+		String email = "";
+		try {
+			tx = sess.beginTransaction();
+			email = (String) sess.save(user);
+			tx.commit();
+		 }
+		 catch (HibernateException e) {
+		     if (tx!=null) tx.rollback();
+		     e.printStackTrace();
+		 }
+		 finally {
+		     sess.close();
+		 }
+		return email;
+	}
+	
+	public void deleteUser(String email) {
+		Session sess = SessionUtil.getSession();
+		Transaction tx = null;
+		try {
+			tx = sess.beginTransaction();
+			User user = getUser(new Credentials(email,""));
+			sess.delete(user);
+			tx.commit();
+		 }
+		 catch (HibernateException e) {
+		     if (tx!=null) tx.rollback();
+		     e.printStackTrace();
+		 }
+		 finally {
+		     sess.close();
+		 }
+	}
+	
+	public void updateUser(User user) {
+		Session sess = SessionUtil.getSession();
+		Transaction tx = null;
+		try {
+			tx = sess.beginTransaction();
+			sess.update(user);
+			tx.commit();
+		 }
+		 catch (HibernateException e) {
+		     if (tx!=null) tx.rollback();
+		     e.printStackTrace();
+		 }
+		 finally {
+		     sess.close();
+		 }
 	}
 
-	public Integer getUserId(Credentials cred) {
+/*	public Integer getUserId(Credentials cred) {
 
 		Session sess = SessionUtil.getSession();
 		String hql = "FROM User WHERE email = :em and password = :pw";
@@ -43,59 +95,22 @@ public class UserDaoImpl {
 			return 0;
 		}
 
-	}
+	}*/
 
 	public UserDaoImpl() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Session openCurrentSession() {
-		currentSession = getSessionFactory().openSession();
-		return currentSession;
-
-	}
-
-	public Session openCurrentSessionwithTransaction() {
-		currentSession = getSessionFactory().openSession();
-		currentTransaction = (Transaction) currentSession.beginTransaction();
-		return currentSession;
-
-	}
-
-	public void closeCurrentSession() {
-		currentSession.close();
-	}
-
-	public void closeCurrentSessionwithTransaction() {
-		currentTransaction.commit();
-		currentSession.close();
-	}
-
+	
+/*
 	private static SessionFactory getSessionFactory() {
 		Configuration configuration = new Configuration().configure();
 		StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder()
 				.applySettings(configuration.getProperties());
 		SessionFactory sessionFactory = configuration.buildSessionFactory(builder.build());
 		return sessionFactory;
-	}
+	}*/
 
-	public void setCurrentSession(Session currentSession) {
-		this.currentSession = currentSession;
-	}
-
-	public Transaction getCurrentTransaction() {
-		return currentTransaction;
-	}
-
-	public void setCurrentTransaction(Transaction currentTransaction) {
-		this.currentTransaction = currentTransaction;
-	}
-
-	ArrayList<User> db = new ArrayList<User>();
-	{
-		db.add(new User("Bob", "The_builder", 1,"bob@revature.com","secret", "tampa", "florida", "rev", 1, "trainee"));
-		db.add(new User("Bill","Smith", 2, "bill@revature.com", "secret2", "tampa", "florida", "rev", 1, "trainee"));
-	}
 
 }

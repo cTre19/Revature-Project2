@@ -42,8 +42,8 @@ public class LoginCtrl {
 		User u = us.validate(cred);
 		if(u == null) {
 			System.out.println("User is null");
+			return "login";
 		}
-		System.out.println(u.toString());
 		
 		if (bindingResult.hasErrors()){
 			System.out.println("inside first if");
@@ -52,7 +52,7 @@ public class LoginCtrl {
 		}
 		
 		if(u != null){
-			System.out.println("inside second if");
+			System.out.println(u.toString());
 			sess.setAttribute("user", u);
 			return "home";
 		}

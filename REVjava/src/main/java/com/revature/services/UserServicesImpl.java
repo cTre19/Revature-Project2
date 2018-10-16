@@ -11,25 +11,23 @@ import com.revature.daos.UserDaoImpl;
 @Service
 public class UserServicesImpl implements ServicesInterface {
 
+	@Autowired
+	UserDaoImpl ud;
 	Logger log = Logger.getLogger(UserServicesImpl.class);
 	public UserServicesImpl() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-
-	@Autowired
-	private static UserDaoImpl ud;
 	
 	public User validate(Credentials cred) {
-		ud = new UserDaoImpl();
-		ud.getCurrentSession();
 		
-		Integer uid = ud.getUserId(cred);
-		
-		User user = ud.getUser(uid);
+		User user = ud.getUser(cred);
 		
 		return user;
 	}
-	
+
+	public String createUser(User user) {
+		return ud.createUser(user);
+	}
 	
 }
