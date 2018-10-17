@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { Credentials } from './credentials';
+import { User } from './user';
 import { catchError, map, tap } from 'rxjs/operators';
 import { MessageService } from './message.service';
 
@@ -23,8 +23,8 @@ export class LoginService {
     private messageService: MessageService) { }
 
   /** POST: send credentials to server */
-  postLogin(credentials: Credentials): Observable<Credentials> {
-    return this.http.post<Credentials>(this.url, credentials, httpOptions);
+  postLogin(user: User): Observable<User> {
+    return this.http.post<User>(this.url, user, httpOptions);
   }
 
 

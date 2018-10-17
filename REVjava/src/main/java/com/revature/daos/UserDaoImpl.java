@@ -7,7 +7,6 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.springframework.stereotype.Repository;
 
-import com.revature.beans.Credentials;
 import com.revature.beans.User;
 import com.revature.util.SessionUtil;
 
@@ -21,8 +20,8 @@ public class UserDaoImpl {
 		return SessionUtil.getSession();
 	}
 
-	public User getUser(Credentials cred) {
-		return (User) getCurrentSession().get(User.class, cred.getEmail());
+	public User getUser(String email) {
+		return (User) getCurrentSession().get(User.class, email);
 	}
 	
 	@Transactional
@@ -50,7 +49,7 @@ public class UserDaoImpl {
 		Transaction tx = null;
 		try {
 			tx = sess.beginTransaction();
-			User user = getUser(new Credentials(email,""));
+			User user = getUser(email);
 			sess.delete(user);
 			tx.commit();
 		 }

@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.revature.beans.Credentials;
 import com.revature.beans.User;
 import com.revature.services.UserServicesImpl;
 
@@ -32,7 +31,7 @@ public class ApplicationCtrl {
 
 		if(user != null) {
 			// check that email does not already exist
-			if(us.validate(new Credentials(user.getEmail(), user.getPassword())) == null) {
+			if(us.getUser(user) == null) {
 				System.out.println(us.createUser(user));
 				System.out.println(user.toString());
 				ObjectMapper om = new ObjectMapper();

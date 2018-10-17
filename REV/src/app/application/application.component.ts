@@ -33,8 +33,14 @@ export class ApplicationComponent implements OnInit {
 
   postApplication(): void {
     console.log(this.first + ' ' + this.last);
-    const u = new User(this.first, this.last, this.email, this.pass, this.city, this.state, this.client,
-      this.batch, this.position);
+    const u = new User(this.email, this.pass);
+    u.firstName = this.first;
+    u.lastName = this.last;
+    u.city = this.city;
+    u.state = this.state;
+    u.clientCompany = this.client;
+    u.batchId = this.batch;
+    u.position = this.position;
 
     console.log(u);
 
