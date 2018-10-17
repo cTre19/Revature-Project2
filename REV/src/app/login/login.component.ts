@@ -14,11 +14,14 @@ import { User } from '../user';
 export class LoginComponent implements OnInit {
 
   title = 'Revature Employee Vessel';
+  loginerror = 'noborder';
+
+  error = '';
   email: '';
   pass: '';
   credentials: Credentials;
 
-  constructor(private loginService: LoginService) {}
+  constructor(private loginService: LoginService) { }
 
   ngOnInit() {
   }
@@ -32,8 +35,13 @@ export class LoginComponent implements OnInit {
     this.loginService.postLogin(c).subscribe(data => this.navigate(data));
   }
 
-    navigate(cred: Credentials): void {
+  navigate(cred: Credentials): void {
+    if (cred == null) {
+      this.error = 'Incorrect email or password, please try again!';
+      this.loginerror = 'redborder';
+    } else {
       location.replace('/home');
     }
+  }
 
 }

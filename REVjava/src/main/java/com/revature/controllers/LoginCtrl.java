@@ -44,12 +44,12 @@ public class LoginCtrl {
 		User u = us.validate(cred);
 		if(u == null) {
 			System.out.println("User is null");
-			return "login";
+			return null;
 		}
 		
 		if (bindingResult.hasErrors()){
 			System.out.println("inside first if");
-			modelMap.addAttribute("errorMessage", bindingResult.getAllErrors().get(0).getDefaultMessage());
+			//modelMap.addAttribute("errorMessage", "Incorrect email or password, please try again!");
 			return "login";
 		}
 		
@@ -57,10 +57,9 @@ public class LoginCtrl {
 			System.out.println(u.toString());
 			sess.setAttribute("user", u);
 			ObjectMapper om = new ObjectMapper();
-			return om.writeValueAsString(cred);
+			return om.writeValueAsString(u);
 		}
 		
-		//modelMap.addAttribute("errorMessage", "Username or password incorrect");
 		
 		return null;
 	}

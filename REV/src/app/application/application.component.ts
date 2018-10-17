@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ApplicationService } from '../application.service';
 import { Observable } from 'rxjs';
 import { User } from '../user';
+import { NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'app-application',
@@ -11,6 +12,8 @@ import { User } from '../user';
 export class ApplicationComponent implements OnInit {
 
   title = 'Revature Employee Vessel';
+  error = 'noborder';
+  errormsg = '';
 
   first: '';
   last: '';
@@ -23,7 +26,7 @@ export class ApplicationComponent implements OnInit {
   position: '';
   user: User;
 
-  constructor(private applicationService: ApplicationService) {}
+  constructor(private applicationService: ApplicationService) { }
 
   ngOnInit() {
   }
@@ -35,7 +38,15 @@ export class ApplicationComponent implements OnInit {
 
     console.log(u);
 
-    this.applicationService.postUser(u).subscribe();
-    /*if (!this.c) { return; } */
-   }
+    this.applicationService.postUser(u).subscribe(data => this.navigate(data));
+    }
+
+    navigate(user: User): void {
+      if (user != null) {
+      location.replace('/login');
+    } else {
+      this.errormsg = 'This email is already registered, please log in or try another email!';
+      this.error = 'redborder';
+    }
+  }
 }

@@ -4,6 +4,7 @@
 </h1>
 <br>
 <h5> Please register to continue!</h5>
+<h5 [class]="error"> {{ errormsg }} </h5><br>
 </div>
 
 <form style="text-align:center">
@@ -49,7 +50,13 @@
       </div>
       <div class="col-4 col-sm">
         Position:
-        <input type="text" [(ngModel)]="position" name="position" required autofocus>
+        <select name="position" [(ngModel)]="position" required autofocus>
+          <option value="University Course">trainee</option>
+          <option value="Seminar">1st year developer</option>
+          <option value="Certification Class">senior developer</option>
+          <option value="Certification">revature graduate</option>
+          <option value="Tech Training">admin</option>
+          </select>
       </div>
     </div><br>
     <div class="row justify-content-center">
