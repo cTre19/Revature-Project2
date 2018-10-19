@@ -4,6 +4,9 @@ import { Observable } from 'rxjs';
 import { NavigationEnd } from '@angular/router';
 import { User } from '../user';
 import { HttpClient } from '@angular/common/http';
+import { HomeComponent } from '../home/home.component';
+import { LOCAL_STORAGE } from 'angular-webstorage-service';
+import { StorageService } from '../storage.service';
 
 @Component({
   selector: 'app-login',
@@ -25,7 +28,8 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private loginService: LoginService,
-    private http: HttpClient
+    private http: HttpClient,
+    private storage: StorageService
     ) { }
 
   ngOnInit() {
@@ -45,6 +49,8 @@ export class LoginComponent implements OnInit {
       this.error = 'Incorrect email or password, please try again!';
       this.loginerror = 'redborder';
     } else {
+      console.log(user.email + ' ' + user.position);
+      this.storage.saveInLocal('1', user);
       location.replace('/home');
     }
   }

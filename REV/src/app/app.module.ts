@@ -9,6 +9,10 @@ import { ApplicationComponent } from './application/application.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HomeComponent } from './home/home.component';
 import { NavComponent } from './nav/nav.component';
+import { StorageServiceModule } from 'angular-webstorage-service';
+import { StorageService } from './storage.service';
+import { LogoutComponent } from './logout/logout.component';
+import { ViewappsComponent } from './viewapps/viewapps.component';
 
 @NgModule({
   declarations: [
@@ -17,15 +21,18 @@ import { NavComponent } from './nav/nav.component';
     MessagesComponent,
     ApplicationComponent,
     HomeComponent,
-    NavComponent
+    NavComponent,
+    LogoutComponent,
+    ViewappsComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
+    StorageServiceModule
   ],
-  providers: [],
+  providers: [StorageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
