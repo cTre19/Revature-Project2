@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.revature.beans.Credentials;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.beans.User;
 import com.revature.services.UserServicesImpl;
 
@@ -34,32 +35,32 @@ public class LoginCtrl {
 	
 	@CrossOrigin(origins="http://localhost:4200")
 	@RequestMapping(value="/login", method=RequestMethod.POST, consumes= {"application/json"})
-	public String loginPost(@RequestBody Credentials cred, BindingResult bindingResult, ModelMap modelMap, HttpSession sess){
+	public String loginPost(@RequestBody User user, BindingResult bindingResult, ModelMap modelMap, HttpSession sess) throws JsonProcessingException{
 		
 		System.out.println("inside loginPost");
-		System.out.println(cred.getEmail());
-		System.out.println(cred.getPass());
-		User u = us.validate(cred);
+		System.out.println(user.getEmail());
+		System.out.println(user.getPassword());
+		User u = us.validate(user);
 		if(u == null) {
 			System.out.println("User is null");
+			return null;
 		}
-		System.out.println(u.toString());
 		
 		if (bindingResult.hasErrors()){
 			System.out.println("inside first if");
-			modelMap.addAttribute("errorMessage", bindingResult.getAllErrors().get(0).getDefaultMessage());
+			//modelMap.addAttribute("errorMessage", "Incorrect email or password, please try again!");
 			return "login";
 		}
 		
 		if(u != null){
-			System.out.println("inside second if");
+			System.out.println(u.toString());
 			sess.setAttribute("user", u);
-			return "home";
+			ObjectMapper om = new ObjectMapper();
+			return om.writeValueAsString(u);
 		}
 		
-		//modelMap.addAttribute("errorMessage", "Username or password incorrect");
 		
-		return "login";
+		return null;
 	}
 	
 

@@ -9,7 +9,6 @@ import javax.persistence.Table;
 @Table(name="revuser")
 public class User {
 	
-	@Id
 	@Column(name="user_id")
 	private int id;
 	
@@ -19,6 +18,7 @@ public class User {
 	@Column(name="last_name")
 	private String lastName;
 	
+	@Id
 	@Column(name="email")
 	private String email;
 	
@@ -40,6 +40,17 @@ public class User {
 	@Column(name="position")
 	private String position;
 	
+	@Column(name="approved")
+	private int approved;
+	
+	public int getApproved() {
+		return approved;
+	}
+
+	public void setApproved(int approved) {
+		this.approved = approved;
+	}
+
 	public User(String firstName, String lastName, int id, String email, String password, String city, String state,
 			String clientCompany, int batchId, String position) {
 		super();
@@ -60,12 +71,14 @@ public class User {
 		// TODO Auto-generated constructor stub
 	}
 
+	
 	@Override
 	public String toString() {
-		return "User [firstName=" + firstName + ", lastName=" + lastName + ", id=" + id + ", email=" + email
+		return "User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
 				+ ", password=" + password + ", city=" + city + ", state=" + state + ", clientCompany=" + clientCompany
-				+ ", batchId=" + batchId + ", position=" + position + "]";
+				+ ", batchId=" + batchId + ", position=" + position + ", approved=" + approved + "]";
 	}
+
 	public String getFirstName() {
 		return firstName;
 	}
