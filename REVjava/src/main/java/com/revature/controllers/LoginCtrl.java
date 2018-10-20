@@ -1,27 +1,29 @@
 package com.revature.controllers;
 
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.beans.User;
-import com.revature.services.AuthServiceImp;
+import com.revature.services.UserServicesImpl;
 
-@RestController
-@RequestMapping(value="/login")
 @CrossOrigin(origins="http://localhost:4200")
+@RestController
 public class LoginCtrl {
 	
 	@Autowired
-	private AuthServiceImp authService;
+	private UserServicesImpl us;
 	
+	@CrossOrigin(origins="http://localhost:4200")
 	@RequestMapping(value="/login", method=RequestMethod.GET)
 	public String loginGet(HttpSession sess){
 		System.out.println("inside loginGet()");
@@ -31,30 +33,35 @@ public class LoginCtrl {
 		return "login";
 	}
 	
-	@RequestMapping(value="/login", method=RequestMethod.POST)
-	public String loginPost(@Valid User user, BindingResult bindingResult, ModelMap modelMap, HttpSession sess){
+	@CrossOrigin(origins="http://localhost:4200")
+	@RequestMapping(value="/login", method=RequestMethod.POST, consumes= {"application/json"})
+	public String loginPost(@RequestBody User user, BindingResult bindingResult, ModelMap modelMap, HttpSession sess) throws JsonProcessingException{
 		
 		System.out.println("inside loginPost");
-		User authUser = authService.validate(user);
+		System.out.println(user.getEmail());
+		System.out.println(user.getPassword());
+		User u = us.validate(user);
+		if(u == null) {
+			System.out.println("User is null");
+			return null;
+		}
 		
 		if (bindingResult.hasErrors()){
-			modelMap.addAttribute("errorMessage", bindingResult.getAllErrors().get(0).getDefaultMessage());
+			System.out.println("inside first if");
+			//modelMap.addAttribute("errorMessage", "Incorrect email or password, please try again!");
 			return "login";
 		}
 		
-		if(authUser != null){
-			sess.setAttribute("user", authUser);
-			return "home";
+		if(u != null){
+			System.out.println(u.toString());
+			sess.setAttribute("user", u);
+			ObjectMapper om = new ObjectMapper();
+			return om.writeValueAsString(u);
 		}
 		
-		modelMap.addAttribute("errorMessage", "Username or password incorrect");
 		
-		return "login";
+		return null;
 	}
 	
-	@RequestMapping(value="/login", method=RequestMethod.OPTIONS)
-	public void options() {
-		
-	}
 
 }

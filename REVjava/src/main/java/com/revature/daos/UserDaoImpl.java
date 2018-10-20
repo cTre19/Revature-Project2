@@ -1,64 +1,115 @@
 package com.revature.daos;
 
-import java.util.ArrayList;
+import javax.transaction.Transactional;
 
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.springframework.stereotype.Repository;
 
 import com.revature.beans.User;
+import com.revature.util.SessionUtil;
 
 @Repository
 public class UserDaoImpl {
 
-	ArrayList<User> db = new ArrayList<User>();
-	{
-		db.add(new User("Bob", "The_builder", 1,"bob@revature.com","secret", "tampa", "florida", "rev", 1, "trainee"));
-		db.add(new User("Bill","Smith", 2, "bill@revature.com", "secret2", "tampa", "florida", "rev", 1, "trainee"));
+	private Session currentSession;
+	private Transaction currentTransaction;
+
+	public Session getCurrentSession() {
+		return SessionUtil.getSession();
 	}
 
-	public User get(String email) {
-		for(int i = 0; i <db.size();i++) {
-			if(db.get(i).getEmail().equals(email)) {
-				return db.get(i);
-			}
+	public User getUser(String email) {
+		return (User) getCurrentSession().get(User.class, email);
+	}
+	
+	@Transactional
+	public String createUser(User user){
+		Session sess = SessionUtil.getSession();
+		Transaction tx = null;
+		String email = "";
+		try {
+			tx = sess.beginTransaction();
+			email = (String) sess.save(user);
+			tx.commit();
+		 }
+		 catch (HibernateException e) {
+		     if (tx!=null) tx.rollback();
+		     e.printStackTrace();
+		 }
+		 finally {
+		     sess.close();
+		 }
+		return email;
+	}
+	
+	public void deleteUser(String email) {
+		Session sess = SessionUtil.getSession();
+		Transaction tx = null;
+		try {
+			tx = sess.beginTransaction();
+			User user = getUser(email);
+			sess.delete(user);
+			tx.commit();
+		 }
+		 catch (HibernateException e) {
+		     if (tx!=null) tx.rollback();
+		     e.printStackTrace();
+		 }
+		 finally {
+		     sess.close();
+		 }
+	}
+	
+	public void updateUser(User user) {
+		Session sess = SessionUtil.getSession();
+		Transaction tx = null;
+		try {
+			tx = sess.beginTransaction();
+			sess.update(user);
+			tx.commit();
+		 }
+		 catch (HibernateException e) {
+		     if (tx!=null) tx.rollback();
+		     e.printStackTrace();
+		 }
+		 finally {
+		     sess.close();
+		 }
+	}
+
+/*	public Integer getUserId(Credentials cred) {
+
+		Session sess = SessionUtil.getSession();
+		String hql = "FROM User WHERE email = :em and password = :pw";
+		Query query = sess.createQuery(hql);
+		query.setParameter("em", cred.getEmail());
+		query.setParameter("pw", cred.getPass());
+
+		try {
+			User u = (User) query.list().get(0);
+			return u.getId();
+		} catch(NullPointerException e) {
+			return 0;
 		}
-		return null;
+
+	}*/
+
+	public UserDaoImpl() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 
-	public void add(User u) {
-		db.add(u);
-	}
+	
+/*
+	private static SessionFactory getSessionFactory() {
+		Configuration configuration = new Configuration().configure();
+		StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder()
+				.applySettings(configuration.getProperties());
+		SessionFactory sessionFactory = configuration.buildSessionFactory(builder.build());
+		return sessionFactory;
+	}*/
 
-	public void update(User u, String email) {
-		User updated = this.get(email);
-		if(updated != null) {
-			updated.setFirstName(u.getFirstName());
-			updated.setLastName(u.getLastName());
-			updated.setId(u.getId());
-			updated.setEmail(u.getEmail());
-			updated.setPassword(u.getPassword());
-			updated.setCity(u.getCity());
-			updated.setState(u.getState());
-			updated.setClientCompany(u.getClientCompany());
-			updated.setBatchId(u.getBatchId());
-			updated.setPosition(u.getPosition());
-		}
-	}
 
-	public void delete(String email) {
-		for(int i = 0; i <db.size();i++) {
-			if(db.get(i).getEmail().equals(email)) {
-				db.remove(i);
-			}
-		}
-	}
-
-	public ArrayList<User> getAll() {
-		ArrayList<User> allUsers = new ArrayList<User>();
-		for(int i = 0; i <db.size();i++) {
-			User u = db.get(i);
-			allUsers.add(u);
-		}
-
-		return allUsers;
-	}
 }

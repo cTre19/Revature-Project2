@@ -1,7 +1,6 @@
 package com.revature.services;
 
-import java.util.ArrayList;
-
+import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,25 +11,34 @@ import com.revature.daos.UserDaoImpl;
 public class UserServicesImpl implements ServicesInterface {
 
 	@Autowired
-	private UserDaoImpl ud;
-	
-	public void addUser(User u) {
-		ud.add(u);
+	UserDaoImpl ud;
+	Logger log = Logger.getLogger(UserServicesImpl.class);
+	public UserServicesImpl() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 	
-	public User getUser(String email) {
-		return ud.get(email);
+	public User validate(User u) {
+		
+		User user = ud.getUser(u.getEmail());
+		if(user == null)
+			return null;
+		
+		if(user.getPassword().equals(u.getPassword())) {
+			System.out.println("user password: " + user.getPassword());
+			System.out.println("u password" + u.getPassword());
+			return user;
+		} else {
+			return null;
+		}
+	}
+
+	public User getUser(User u) {
+		return ud.getUser(u.getEmail());
 	}
 	
-	public void updateUser(User u, String email) {
-		ud.update(u, email);
+	public String createUser(User user) {
+		return ud.createUser(user);
 	}
 	
-	public void deleteUser(String email) {
-		ud.delete(email);
-	}
-	
-	public ArrayList<User> getAllUsers() {
-		return ud.getAll();
-	}
 }

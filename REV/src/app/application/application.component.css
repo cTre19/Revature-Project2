@@ -1,0 +1,19 @@
+.application {
+    background-color: rgb(41, 100, 168);
+    border-style: ridge;
+    border-width: 1rem;
+    padding: .5rem;
+    border-color: gray;
+    margin: 0 auto;
+}
+
+.noborder {
+    border-style: none;
+}
+
+.redborder {
+    border-style: solid;
+    background-color: rgb(248, 81, 81);
+    width: 20rem;
+    margin: 0 auto;
+}

@@ -16,12 +16,13 @@ public class UserController {
 	@Autowired
 	private UserServicesImpl us;
 	
+	/*
 	@RequestMapping(value="/user", method=RequestMethod.GET)
 	public ArrayList<User> getUsers() {
 		System.out.println("inside getUsers()");
 		
 		return us.getAllUsers();
-	}
+	}*/
 	
 	@RequestMapping(value="/user", method=RequestMethod.POST)
 	public void getUser() {
