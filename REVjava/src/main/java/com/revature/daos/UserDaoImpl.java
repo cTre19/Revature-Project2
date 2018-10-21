@@ -11,7 +11,7 @@ import com.revature.beans.User;
 import com.revature.util.SessionUtil;
 
 @Repository
-public class UserDaoImpl {
+public class UserDaoImpl implements UserDao{
 
 	private Session currentSession;
 	private Transaction currentTransaction;
@@ -19,19 +19,30 @@ public class UserDaoImpl {
 	public Session getCurrentSession() {
 		return SessionUtil.getSession();
 	}
+	
+	public void setCurrentSession(Session currentSession) {
+		this.currentSession = currentSession;
+	}
+	
+	public void newSession() {
+		if (currentSession == null) {
+			currentSession = SessionUtil.getSession();
+		}
+	}
 
 	public User getUser(String email) {
-		return (User) getCurrentSession().get(User.class, email);
+		newSession();
+		return (User) currentSession.get(User.class, email);
 	}
 	
 	@Transactional
 	public String createUser(User user){
-		Session sess = SessionUtil.getSession();
+		newSession();
 		Transaction tx = null;
 		String email = "";
 		try {
-			tx = sess.beginTransaction();
-			email = (String) sess.save(user);
+			tx = currentSession.beginTransaction();
+			email = (String) currentSession.save(user);
 			tx.commit();
 		 }
 		 catch (HibernateException e) {
@@ -39,7 +50,7 @@ public class UserDaoImpl {
 		     e.printStackTrace();
 		 }
 		 finally {
-		     sess.close();
+		     currentSession.close();
 		 }
 		return email;
 	}
