@@ -19,7 +19,7 @@ export class HomeComponent implements OnInit {
     if (this.storage.getFromLocal('1') == null) {
       location.replace('/login');
     } else {
-      this.name = this.storage.getFromLocal('1').firstName;
+      this.name = 'Welcome ' + ' ' + this.storage.getFromLocal('1').firstName;
     }
   }
 

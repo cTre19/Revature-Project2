@@ -6,8 +6,8 @@ export class User {
     password: string;
     city: string;
     state: string;
-    clientCompany: string;
-    batchId: number;
+    client: string;
+    batch_id: number;
     position: string;
 
     constructor(email: string, pass: string) {

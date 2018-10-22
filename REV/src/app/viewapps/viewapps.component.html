@@ -1,3 +1,17 @@
-<p>
-  viewapps works!
-</p>
+<div style="text-align:center">
+  <h3>Pending Applications</h3>
+  <table class="table table-dark table-striped">
+    <tr>
+      <th *ngFor="let col of columns">
+        {{col}}
+      </th>
+    </tr>
+    <tr *ngFor="let u of users | async">
+      <td *ngFor="let col of columns">
+        {{u[col]}}
+      </td>
+      <button type="button" class="btn btn-primary">approve</button>
+      <button type="button" class="btn btn-danger">deny</button>
+    </tr>
+  </table>
+</div>
