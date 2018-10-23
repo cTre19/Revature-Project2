@@ -46,7 +46,7 @@ export class LoginComponent implements OnInit {
 
   navigate(user: User): void {
     if (user == null) {
-      this.error = 'Incorrect email or password, please try again!';
+      this.error = 'Incorrect email/password or account pending approval, please try again!';
       this.loginerror = 'redborder';
     } else {
       console.log(user.email + ' ' + user.position);

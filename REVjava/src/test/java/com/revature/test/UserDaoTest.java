@@ -47,8 +47,8 @@ public class UserDaoTest {
 		newUser.setCity("Tampa");
 		newUser.setState("Florida");
 		newUser.setPosition("Trainee");
-		newUser.setBatchId(7);
-		newUser.setClientCompany("Cognizant");
+		newUser.setBatch_id(7);
+		newUser.setClient("Cognizant");
 		newUser.setId(123);
 		users.add(newUser);
 
@@ -60,8 +60,8 @@ public class UserDaoTest {
 		newUser2.setCity("Tampa");
 		newUser2.setState("Florida");
 		newUser2.setPosition("Trainee");
-		newUser2.setBatchId(7);
-		newUser2.setClientCompany("Cognizant");
+		newUser2.setBatch_id(7);
+		newUser2.setClient("Cognizant");
 		newUser2.setId(124);
 		users.add(newUser2);
 		
@@ -73,8 +73,8 @@ public class UserDaoTest {
 		newUser3.setCity("Dallas");
 		newUser3.setState("Texas");
 		newUser3.setPosition("Developer");
-		newUser3.setBatchId(63);
-		newUser3.setClientCompany("Verizon");
+		newUser3.setBatch_id(63);
+		newUser3.setClient("Verizon");
 		newUser3.setId(666);
 		users.add(newUser3);
 		
@@ -109,8 +109,8 @@ public class UserDaoTest {
 		assertEquals(newUser.getCity(), result.getCity());
 		assertEquals(newUser.getState(), result.getState());
 		assertEquals(newUser.getPosition(), result.getPosition());
-		assertEquals(newUser.getBatchId(), result.getBatchId());
-		assertEquals(newUser.getClientCompany(), result.getClientCompany());
+		assertEquals(newUser.getBatch_id(), result.getBatch_id());
+		assertEquals(newUser.getClient(), result.getClient());
 		assertEquals(newUser.getId(), result.getId());
 		
 	}
