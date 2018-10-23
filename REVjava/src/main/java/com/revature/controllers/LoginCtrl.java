@@ -38,6 +38,7 @@ public class LoginCtrl {
 	public String loginPost(@RequestBody User user, BindingResult bindingResult, ModelMap modelMap, HttpSession sess) throws JsonProcessingException{
 		
 		System.out.println("inside loginPost");
+		// lets get this
 		System.out.println(user.getEmail());
 		System.out.println(user.getPassword());
 		User u = us.validate(user);
