@@ -2,15 +2,15 @@ package com.revature.beans;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="revuser")
 public class User {
-	
-	@Column(name="user_id")
-	private int id;
+
 	
 	@Column(name="first_name")
 	private String firstName;
@@ -55,12 +55,11 @@ public class User {
 		this.email = email;
 	}
 
-	public User(String firstName, String lastName, int id, String email, String password, String city, String state,
+	public User(String firstName, String lastName, String email, String password, String city, String state,
 			String client, int batch_id, String position) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.id = id;
 		this.email = email;
 		this.password = password;
 		this.city = city;
@@ -78,7 +77,7 @@ public class User {
 	
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
+		return "User [firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
 				+ ", password=" + password + ", city=" + city + ", state=" + state + ", clientCompany=" + client
 				+ ", batchId=" + batch_id + ", position=" + position + ", approved=" + approved + "]";
 	}
@@ -94,12 +93,6 @@ public class User {
 	}
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
-	}
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
 	}
 	public String getEmail() {
 		return email;

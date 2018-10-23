@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, Pipe } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -13,6 +13,8 @@ import { StorageServiceModule } from 'angular-webstorage-service';
 import { StorageService } from './storage.service';
 import { LogoutComponent } from './logout/logout.component';
 import { ViewappsComponent } from './viewapps/viewapps.component';
+import { ViewempsComponent } from './viewemps/viewemps.component';
+import { FilterPipe } from './viewemps/viewemps.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,10 @@ import { ViewappsComponent } from './viewapps/viewapps.component';
     HomeComponent,
     NavComponent,
     LogoutComponent,
-    ViewappsComponent
+    ViewappsComponent,
+    ViewempsComponent,
+    FilterPipe
+
   ],
   imports: [
     BrowserModule,

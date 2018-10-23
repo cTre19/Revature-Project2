@@ -17,6 +17,9 @@ const httpOptions = {
 export class UserService {
 
   url = 'http://localhost:8080/REVjava/user';
+  url2 = 'http://localhost:8080/REVjava/emps';
+  url3 = 'http://localhost:8080/REVjava/group';
+
 
   constructor(
     private http: HttpClient,
@@ -25,5 +28,25 @@ export class UserService {
   /** POST: send credentials to server */
   getApps(): Observable<User[]> {
     return this.http.get<User[]>(this.url, httpOptions);
+  }
+
+  getUsers(): Observable<User[]> {
+    return this.http.get<User[]>(this.url2, httpOptions);
+  }
+
+  getGroup(user: User): Observable<User[]> {
+    return this.http.post<User[]>(this.url3, user, httpOptions);
+  }
+
+  update(user: User): Observable<User> {
+    console.log('inside put');
+    console.log('user email: ' + user.email);
+    return this.http.put<User>(this.url, user, httpOptions);
+  }
+
+  delete(user: User): Observable<User> {
+    console.log('inside delete');
+    console.log('user email: ' + user.email);
+    return this.http.delete<User>(this.url + '/' + user.email, httpOptions);
   }
 }

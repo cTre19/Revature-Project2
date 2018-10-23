@@ -1,5 +1,8 @@
 package com.revature.daos;
 
+import java.util.List;
+
+import javax.persistence.Query;
 import javax.transaction.Transactional;
 
 import org.hibernate.HibernateException;
@@ -32,7 +35,12 @@ public class UserDaoImpl implements UserDao{
 
 	public User getUser(String email) {
 		newSession();
-		return (User) currentSession.get(User.class, email);
+		User u = (User) currentSession.get(User.class, email);
+		if(u != null)
+			currentSession.refresh(u);
+		currentSession.close();
+		currentSession = null;
+		return u;
 	}
 	
 	@Transactional
@@ -51,17 +59,20 @@ public class UserDaoImpl implements UserDao{
 		 }
 		 finally {
 		     currentSession.close();
+		     currentSession = null;
 		 }
 		return email;
 	}
 	
+
+	@Transactional
 	public void deleteUser(String email) {
-		Session sess = SessionUtil.getSession();
+		newSession();
 		Transaction tx = null;
 		try {
-			tx = sess.beginTransaction();
+			tx = currentSession.beginTransaction();
 			User user = getUser(email);
-			sess.delete(user);
+			currentSession.delete(user);
 			tx.commit();
 		 }
 		 catch (HibernateException e) {
@@ -69,7 +80,7 @@ public class UserDaoImpl implements UserDao{
 		     e.printStackTrace();
 		 }
 		 finally {
-		     sess.close();
+		    // currentSession.close();
 		 }
 	}
 	
@@ -78,7 +89,8 @@ public class UserDaoImpl implements UserDao{
 		Transaction tx = null;
 		try {
 			tx = sess.beginTransaction();
-			sess.update(user);
+			sess.saveOrUpdate(user);
+			sess.flush();
 			tx.commit();
 		 }
 		 catch (HibernateException e) {
@@ -90,28 +102,38 @@ public class UserDaoImpl implements UserDao{
 		 }
 	}
 
-/*	public Integer getUserId(Credentials cred) {
-
-		Session sess = SessionUtil.getSession();
-		String hql = "FROM User WHERE email = :em and password = :pw";
-		Query query = sess.createQuery(hql);
-		query.setParameter("em", cred.getEmail());
-		query.setParameter("pw", cred.getPass());
-
-		try {
-			User u = (User) query.list().get(0);
-			return u.getId();
-		} catch(NullPointerException e) {
-			return 0;
-		}
-
-	}*/
-
 	public UserDaoImpl() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
+	public List<User> getPending(){
+		newSession();
+		Query query = currentSession.createQuery("FROM User where approved=0");
+		List<User> all = query.getResultList();
+		currentSession.close();
+		currentSession = null;
+		return all;
+	}
+
+	public List<User> getUsers() {
+		newSession();
+		Query query = currentSession.createQuery("FROM User where approved=3");
+		List<User> all = query.getResultList();
+		currentSession.close();
+		currentSession = null;
+		return all;
+	}
+	
+	public List<User> getUsersByLoc(User u) {
+		newSession();
+		String location = u.getCity();
+		Query query = currentSession.createQuery("FROM User where approved=3 AND city='" + location+"'");
+		List<User> all = query.getResultList();
+		currentSession.close();
+		currentSession = null;
+		return all;
+	}
 	
 /*
 	private static SessionFactory getSessionFactory() {
