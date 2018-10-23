@@ -49,7 +49,6 @@ public class UserDaoTest {
 		newUser.setPosition("Trainee");
 		newUser.setBatch_id(7);
 		newUser.setClient("Cognizant");
-		newUser.setId(123);
 		users.add(newUser);
 
 		newUser2 = new User();
@@ -62,7 +61,6 @@ public class UserDaoTest {
 		newUser2.setPosition("Trainee");
 		newUser2.setBatch_id(7);
 		newUser2.setClient("Cognizant");
-		newUser2.setId(124);
 		users.add(newUser2);
 		
 		newUser3 = new User();
@@ -75,7 +73,6 @@ public class UserDaoTest {
 		newUser3.setPosition("Developer");
 		newUser3.setBatch_id(63);
 		newUser3.setClient("Verizon");
-		newUser3.setId(666);
 		users.add(newUser3);
 		
 		udao = new UserDaoImpl();
@@ -111,7 +108,6 @@ public class UserDaoTest {
 		assertEquals(newUser.getPosition(), result.getPosition());
 		assertEquals(newUser.getBatch_id(), result.getBatch_id());
 		assertEquals(newUser.getClient(), result.getClient());
-		assertEquals(newUser.getId(), result.getId());
 		
 	}
 
