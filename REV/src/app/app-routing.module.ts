@@ -6,6 +6,7 @@ import { ApplicationComponent } from './application/application.component';
 import { HomeComponent } from './home/home.component';
 import { LogoutComponent } from './logout/logout.component';
 import { ViewappsComponent } from './viewapps/viewapps.component';
+import { ViewempsComponent } from './viewemps/viewemps.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -13,7 +14,8 @@ const routes: Routes = [
   { path: 'application', component: ApplicationComponent},
   { path: 'home', component: HomeComponent},
   { path: 'logout', component: LogoutComponent},
-  { path: 'viewapps', component: ViewappsComponent}
+  { path: 'viewapps', component: ViewappsComponent},
+  { path: 'viewemps', component: ViewempsComponent}
 ];
 
 @NgModule({

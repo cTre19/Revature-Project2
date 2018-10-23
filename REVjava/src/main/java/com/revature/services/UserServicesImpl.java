@@ -1,5 +1,7 @@
 package com.revature.services;
 
+import java.util.List;
+
 import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,10 +23,11 @@ public class UserServicesImpl implements ServicesInterface {
 	public User validate(User u) {
 		
 		User user = ud.getUser(u.getEmail());
+		System.out.println("inside validate: " + u.toString());
 		if(user == null)
 			return null;
 		
-		if(user.getPassword().equals(u.getPassword())) {
+		if(user.getPassword().equals(u.getPassword()) && user.getApproved() == 3) {
 			System.out.println("user password: " + user.getPassword());
 			System.out.println("u password" + u.getPassword());
 			return user;
@@ -41,4 +44,23 @@ public class UserServicesImpl implements ServicesInterface {
 		return ud.createUser(user);
 	}
 	
+	public void update(User user) {
+		ud.updateUser(user);
+	}
+	
+	public List<User> getPending() {
+		return ud.getPending();
+	}
+
+	public void deleteUser(User user) {
+		ud.deleteUser(user.getEmail());
+	}
+
+	public List<User> getUsers() {
+		return ud.getUsers();
+	}
+	
+	public List<User> getUserLocs(User user) {
+		return ud.getUsersByLoc(user);
+	}
 }

@@ -1,3 +1,34 @@
-<form style="text-align:center">
-<h1>Welcome {{ name }}</h1>
-</form>
+<div id="welcome" style="text-align:center">
+    <h1> {{ name }}</h1>
+</div>
+<br>
+<div class="container-fluid full-width">
+    <div class="row">
+        <div class="col-sm-3" id="info">
+            <h4 style="text-align:center"><strong> User info </strong></h4>
+            <h5> Email: {{email}}</h5>
+            <h5> City: {{city}}</h5>
+            <h5> State: {{state}}</h5>
+            <h5> Batch ID: {{batch_id}}</h5>
+            <h5> Client: {{client}}</h5>
+            <h5> Position: {{position}}</h5>
+        </div>
+        <div class="col-sm-9" id="group" style="text-align:center">
+            <h3><strong>Group Members</strong></h3>
+            <table class="table table-dark table-striped">
+                <tr>
+                    <th *ngFor="let col of columns">
+                        {{col}}
+                    </th>
+                </tr>
+                <tr *ngFor="let u of users | async | filter : searchText">
+                    <td *ngFor="let col of columns">
+                        {{u[col]}}
+                    </td>
+                    <td>
+                        <button class="btn btn-primary" input="button">view</button></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

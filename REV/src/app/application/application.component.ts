@@ -22,7 +22,7 @@ export class ApplicationComponent implements OnInit {
   city: '';
   state: '';
   client: '';
-  batch: 0;
+  batch_id: 0;
   position: '';
   user: User;
 
@@ -38,8 +38,8 @@ export class ApplicationComponent implements OnInit {
     u.lastName = this.last;
     u.city = this.city;
     u.state = this.state;
-    u.clientCompany = this.client;
-    u.batchId = this.batch;
+    u.client = this.client;
+    u.batch_id = this.batch_id;
     u.position = this.position;
 
     console.log(u);

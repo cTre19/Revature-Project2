@@ -1,0 +1,16 @@
+#info {
+    float: left;
+    border-style: ridge;
+    border-width: 1rem;
+}
+
+#group {
+    float: right;
+    border-style: ridge;
+    border-width: 1rem;
+
+}
+
+#welcome {
+    float: center;
+}

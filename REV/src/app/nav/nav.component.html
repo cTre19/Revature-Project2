@@ -1,18 +1,13 @@
 <nav class="navbar navbar-expand-sm navbar-dark bg-grey main-nav">
   <ul class="navbar-nav navbar-left">
-    <!-- <li class="nav-item active"> -->
-    <li class="nav-item"><a class="nav-link" routerLink="/login">login</a></li>
-    <li class="nav-item"><a class="nav-link" routerLink="/application">apply</a></li>
-    <li class="nav-item"><a class="nav-link disabled" >home</a></li>
-    <li class="nav-item"><a class="nav-link routerLink="/viewApps">view applications</a></li>
-  </ul>
-  <ul class="nav navbar-nav flex-fill justify-content-center">
     <li class="nav-item" id="rev">
-      <img width="200" alt="Revature Logo" src="../assets/images/revature-logo2.png"></li>
-  </ul>
-  <ul class="navbar-nav navbar-right" id="logout">
-    <li class="nav-item"><a class="nav-link" routerLink="/logout">logout</a>
-    </li>
+      <img width="120" alt="Revature Logo" src="../assets/images/revature-logo2.png"></li>
+    <li *ngIf="isLoggedIn()==false" class="nav-item"><a class="nav-link" routerLink="/login">login</a></li>
+    <li *ngIf="isLoggedIn()==false" class="nav-item"><a class="nav-link" routerLink="/application">apply</a></li>
+    <li *ngIf="isLoggedIn()" class="nav-item"><a class="nav-link" routerLink="/home">home</a></li>
+    <li *ngIf="isAdmin()" class="nav-item"><a class="nav-link" routerLink="/viewapps">view applications</a></li>
+    <li *ngIf="isLoggedIn()" class="nav-item" id="logout"><a class="nav-link" routerLink="/logout">logout</a></li>
+    <li *ngIf="isLoggedIn()" class="nav-item"><a class="nav-link" routerLink="/viewemps">view employees</a></li>
   </ul>
 
 </nav>

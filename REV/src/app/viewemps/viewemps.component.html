@@ -1,17 +1,17 @@
 <div style="text-align:center">
-  <h3>Pending Applications</h3>
+  <h3>View All Employees</h3>
+  <input [(ngModel)]="searchText" placeholder="Search by Email" align="center"><br>
+  <br>
   <table class="table table-dark table-striped">
     <tr>
       <th *ngFor="let col of columns">
         {{col}}
       </th>
     </tr>
-    <tr *ngFor="let u of users | async">
+    <tr *ngFor="let u of users | async | filter : searchText">
       <td *ngFor="let col of columns">
         {{u[col]}}
       </td>
-      <button type="button" (click)="approveUser(u)" class="btn btn-primary">approve</button>
-      <button type="button" (click)="denyUser(u)" class="btn btn-danger">deny</button>
     </tr>
   </table>
 </div>

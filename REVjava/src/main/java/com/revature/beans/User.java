@@ -2,15 +2,15 @@ package com.revature.beans;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="revuser")
 public class User {
-	
-	@Column(name="user_id")
-	private int id;
+
 	
 	@Column(name="first_name")
 	private String firstName;
@@ -32,10 +32,10 @@ public class User {
 	private String state;
 	
 	@Column(name="client")
-	private String clientCompany;
+	private String client;
 	
 	@Column(name="batch_id")
-	private int batchId;
+	private int batch_id;
 	
 	@Column(name="position")
 	private String position;
@@ -50,19 +50,22 @@ public class User {
 	public void setApproved(int approved) {
 		this.approved = approved;
 	}
+	
+	public User(String email) {
+		this.email = email;
+	}
 
-	public User(String firstName, String lastName, int id, String email, String password, String city, String state,
-			String clientCompany, int batchId, String position) {
+	public User(String firstName, String lastName, String email, String password, String city, String state,
+			String client, int batch_id, String position) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.id = id;
 		this.email = email;
 		this.password = password;
 		this.city = city;
 		this.state = state;
-		this.clientCompany = clientCompany;
-		this.batchId = batchId;
+		this.client = client;
+		this.batch_id = batch_id;
 		this.position = position;
 	}
 	
@@ -74,9 +77,9 @@ public class User {
 	
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
-				+ ", password=" + password + ", city=" + city + ", state=" + state + ", clientCompany=" + clientCompany
-				+ ", batchId=" + batchId + ", position=" + position + ", approved=" + approved + "]";
+		return "User [firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
+				+ ", password=" + password + ", city=" + city + ", state=" + state + ", clientCompany=" + client
+				+ ", batchId=" + batch_id + ", position=" + position + ", approved=" + approved + "]";
 	}
 
 	public String getFirstName() {
@@ -90,12 +93,6 @@ public class User {
 	}
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
-	}
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
 	}
 	public String getEmail() {
 		return email;
@@ -121,17 +118,17 @@ public class User {
 	public void setState(String state) {
 		this.state = state;
 	}
-	public String getClientCompany() {
-		return clientCompany;
+	public String getClient() {
+		return client;
 	}
-	public void setClientCompany(String clientCompany) {
-		this.clientCompany = clientCompany;
+	public void setClient(String clientCompany) {
+		this.client = clientCompany;
 	}
-	public int getBatchId() {
-		return batchId;
+	public int getBatch_id() {
+		return batch_id;
 	}
-	public void setBatchId(int batchId) {
-		this.batchId = batchId;
+	public void setBatch_id(int batchId) {
+		this.batch_id = batchId;
 	}
 	public String getPosition() {
 		return position;
